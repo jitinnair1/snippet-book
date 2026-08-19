@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'none';
+  script-src 'self' https://cdn.jsdelivr.net;
+  style-src 'self' https://fonts.googleapis.com;
+  img-src 'self' https://images.unsplash.com https://i.imgur.com;
+  font-src 'self' https://fonts.gstatic.com;
+  connect-src 'self';
+  media-src 'self';
+  object-src 'none';
+  child-src 'self';
+  form-action 'none';
+  base-uri 'self';
+">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Posts Without Date in Filename</title>
+<!-- Begin Jekyll SEO tag v2.9.0 -->
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Posts Without Date in Filename">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Typically, posts in Jekyll have a YYYY-MM-DD portion in the post’s filename. The individual markdown posts can be freed from this naming convention to reduce the clutter in the filename.">
+<meta name="twitter:description" property="og:description" content="Typically, posts in Jekyll have a YYYY-MM-DD portion in the post’s filename. The individual markdown posts can be freed from this naming convention to reduce the clutter in the filename.">
+<link rel="canonical" href="/snippet-book/2022/10/01/posts-without-filename.html">
+<meta property="og:url" content="/snippet-book/2022/10/01/posts-without-filename.html">
+<meta property="og:site_name" content="snippet-book">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-10-01T00:00:00+05:30">
+<meta property="article:modified_time" content="2022-10-01T00:00:00+05:30">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Posts Without Date in Filename">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-10-01T00:00:00+05:30","datePublished":"2022-10-01T00:00:00+05:30","description":"Typically, posts in Jekyll have a YYYY-MM-DD portion in the post’s filename. The individual markdown posts can be freed from this naming convention to reduce the clutter in the filename.","headline":"Posts Without Date in Filename","mainEntityOfPage":{"@type":"WebPage","@id":"/snippet-book/2022/10/01/posts-without-filename.html"},"url":"/snippet-book/2022/10/01/posts-without-filename.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- insert favicons, used https://realfavicongenerator.net/ -->
+  <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+<link rel="stylesheet" type="text/css" href="/snippet-book/assets/css/latte.css" media="screen and (prefers-color-scheme: light)">
+    <link rel="stylesheet" type="text/css" href="/snippet-book/assets/css/macchiato.css" media="screen and (prefers-color-scheme: dark)">
+</head>
+<body>
+    <div class="container">
+<header>
+    <div class="menu">
+<ul>
+    <li><a href="/snippet-book/">~</a></li>
+    <li><a href="https://github.com/jitinnair1/snippet-diary" target="_blank">source</a></li>
+    <li><a href="/snippet-book/about">about</a></li>
+</ul>
+<ul></ul>
+    </div>
+</header>
+<main>
+      <p>Typically, posts in Jekyll have a <code class="language-plaintext highlighter-rouge">YYYY-MM-DD</code> portion in the post’s filename. The individual markdown posts can be freed from this naming convention to reduce the clutter in the filename.</p>
+
+<!--more-->
+
+<p>Also, it become easier to export a set of <code class="language-plaintext highlighter-rouge">*.md</code> files from any note-taking app and add them to the <code class="language-plaintext highlighter-rouge">_posts</code> folder without worrying about changing the filenames.</p>
+
+<p>Tail does this by using a <a href="https://stackoverflow.com/a/68287682/9523246" rel="external">small plugin<span class="ico-ext"><i class="fas fa-external-link-square-alt"></i></span></a> that changes the <code class="language-plaintext highlighter-rouge">DATE_FILENAME_MATCHER</code> for <code class="language-plaintext highlighter-rouge">_posts</code> and <code class="language-plaintext highlighter-rouge">_drafts</code> folders</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Jekyll::PostReader</span>
+    <span class="c1"># Don't use DATE_FILENAME_MATCHER so we don't need to put those stupid dates</span>
+    <span class="c1"># in the filename. Also limit to just *.markdown, so it won't process binary</span>
+    <span class="c1"># files from e.g. drags.</span>
+    <span class="k">def</span> <span class="nf">read_posts</span><span class="p">(</span><span class="n">dir</span><span class="p">)</span>
+      <span class="n">read_publishable</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="s2">"_posts"</span><span class="p">,</span> <span class="sr">/.*\.md$/</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">def</span> <span class="nf">read_drafts</span><span class="p">(</span><span class="n">dir</span><span class="p">)</span>
+      <span class="n">read_publishable</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="s2">"_drafts"</span><span class="p">,</span> <span class="sr">/.*\.md$/</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+
+    </main><footer>
+  <div class="copy">
+    <p>© snippet-book 2026 | Powered by Jekyll and <a target="_blank" href="https://github.com/jitinnair1/snippet-book/">snippet-book</a>.</p>
+  </div>
+</footer>
+</div>
+  </body>
+</html>
