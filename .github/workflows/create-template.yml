@@ -7,10 +7,11 @@ on:
 
 jobs:
   create-template-branch:
+    if: github.repository == 'jitinnair1/snippet-book'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -25,6 +26,7 @@ jobs:
           git branch -D template || true
           git checkout -b template
           git rm -rf --cached --ignore-unmatch "_posts" "Gemfile.lock" "README.md"
+          git rm -rf --cached .github/workflows/create-template.yml
           git commit -m "Update template branch"
           git push origin template -f
 
